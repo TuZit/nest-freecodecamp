@@ -1,9 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { CreateSongDto } from './dto/create-song.dto';
 import { UpdateSongDto } from './dto/update-song.dto';
+import { Repository } from 'typeorm';
+import { Song } from './entities/song.entity';
 
 @Injectable()
 export class SongsService {
+  constructor(private readonly songsRepository: Repository<Song>) {}
+
   create(createSongDto: CreateSongDto) {
     console.log('createSongDto', createSongDto);
     return 'This action adds a new song';
