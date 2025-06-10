@@ -11,6 +11,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './modules/users/entities/user.entity';
 import { Song } from './modules/songs/entities/song.entity';
 import { PlayList } from './modules/playlists/entities/playlist.entity';
+import { ArtistModule } from './modules/artist/artist.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { PlayList } from './modules/playlists/entities/playlist.entity';
       entities: [User, Song, PlayList],
       synchronize: true,
     }),
+    ArtistModule,
   ],
   controllers: [AppController],
   providers: [

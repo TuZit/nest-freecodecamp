@@ -14,20 +14,20 @@ export class PlaylistsService {
     private playListRepository: Repository<PlayList>,
 
     @InjectRepository(User)
-    private userRepository: Repository<PlayList>,
+    private userRepository: Repository<User>,
 
     @InjectRepository(Song)
-    private songRepository: Repository<PlayList>,
+    private songRepository: Repository<Song>,
   ) {}
   async create(createPlaylistDto: CreatePlaylistDto) {
     const playList = new PlayList();
     playList.name = createPlaylistDto.name;
 
-    // const songs = await this.songRepository.findBy({ songs: createPlaylistDto.songs });
-    // playList.songs = songs;
+    const songs = await this.songRepository.findByIds(createPlaylistDto.songs);
+    playList.songs = songs;
 
-    // const user = await this.userRepository.findOneBy({ id: createPlaylistDto.user });
-    // playList.user = user;
+    const user = await this.userRepository.findOneBy({ id: createPlaylistDto.user });
+    playList.user = user;
 
     return this.playListRepository.save(playList);
   }

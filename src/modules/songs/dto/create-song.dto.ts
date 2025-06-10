@@ -1,4 +1,5 @@
 import { IsArray, IsDateString, IsMilitaryTime, IsNotEmpty, IsString } from 'class-validator';
+import { Artist } from 'src/modules/artist/entities/artist.entity';
 
 export class CreateSongDto {
   @IsString()
@@ -8,7 +9,7 @@ export class CreateSongDto {
   @IsString()
   @IsNotEmpty()
   @IsArray()
-  readonly artists: string[];
+  readonly artists: Artist[];
 
   @IsDateString()
   @IsNotEmpty()
@@ -16,5 +17,11 @@ export class CreateSongDto {
 
   @IsMilitaryTime()
   @IsNotEmpty()
-  readonly duration: string;
+  readonly duration: Date;
+
+  @IsString()
+  readonly lyrics: string;
+
+  @IsString()
+  readonly releasedDate: Date;
 }

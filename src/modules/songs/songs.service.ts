@@ -1,32 +1,60 @@
 import { Injectable } from '@nestjs/common';
 import { CreateSongDto } from './dto/create-song.dto';
-import { UpdateSongDto } from './dto/update-song.dto';
-import { Repository } from 'typeorm';
+import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { Song } from './entities/song.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Artist } from '../artist/entities/artist.entity';
+import { IPaginationOptions, Pagination, paginate } from 'nestjs-typeorm-paginate';
+import { UpdateSongDto } from './dto/update-song.dto';
 
 @Injectable()
 export class SongsService {
-  constructor(private readonly songsRepository: Repository<Song>) {}
+  constructor(
+    private readonly songsRepository: Repository<Song>,
 
-  create(createSongDto: CreateSongDto) {
-    console.log('createSongDto', createSongDto);
-    return 'This action adds a new song';
+    @InjectRepository(Artist)
+    private artistsRepository: Repository<Artist>,
+  ) {}
+
+  async create(songDTO: CreateSongDto): Promise<Song> {
+    const song = new Song();
+    song.title = songDTO.title;
+    song.artists = songDTO.artists;
+    song.duration = songDTO.duration;
+    song.lyrics = songDTO.lyrics;
+    song.releasedDate = songDTO.releasedDate;
+
+    console.log(songDTO.artists);
+
+    // find all the artits on the based on ids
+    const artists = await this.artistsRepository.findByIds(songDTO.artists);
+    console.log(artists);
+    //set the relation with artist and songs
+    song.artists = artists;
+
+    return this.songsRepository.save(song);
   }
 
-  findAll() {
-    return `This action returns all songs`;
+  findAll(): Promise<Song[]> {
+    return this.songsRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} song`;
+  findOne(id: number): Promise<Song> {
+    return this.songsRepository.findOneBy({ id });
   }
 
-  update(id: number, updateSongDto: UpdateSongDto) {
-    console.log('updateSongDto', updateSongDto);
-    return `This action updates a #${id} song`;
+  remove(id: number): Promise<DeleteResult> {
+    return this.songsRepository.delete(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} song`;
+  update(id: number, recordToUpdate: UpdateSongDto): Promise<UpdateResult> {
+    return this.songsRepository.update(id, recordToUpdate);
+  }
+
+  paginate(options: IPaginationOptions): Promise<Pagination<Song>> {
+    const queryBuilder = this.songsRepository.createQueryBuilder('c');
+    queryBuilder.orderBy('c.releasedDate', 'DESC');
+
+    return paginate<Song>(queryBuilder, options);
   }
 }
