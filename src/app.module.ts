@@ -13,6 +13,7 @@ import { Song } from './modules/songs/entities/song.entity';
 import { PlayList } from './modules/playlists/entities/playlist.entity';
 import { ArtistModule } from './modules/artist/artist.module';
 import { Artist } from './modules/artist/entities/artist.entity';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { Artist } from './modules/artist/entities/artist.entity';
       synchronize: true,
     }),
     ArtistModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [

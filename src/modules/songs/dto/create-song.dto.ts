@@ -13,7 +13,7 @@ export class CreateSongDto {
 
   @IsDateString()
   @IsNotEmpty()
-  readonly releaseDate: Date;
+  readonly releasedDate: Date;
 
   @IsMilitaryTime()
   @IsNotEmpty()
@@ -21,7 +21,4 @@ export class CreateSongDto {
 
   @IsString()
   readonly lyrics: string;
-
-  @IsString()
-  readonly releasedDate: Date;
 }

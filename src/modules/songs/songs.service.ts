@@ -18,9 +18,10 @@ export class SongsService {
   ) {}
 
   async create(songDTO: CreateSongDto): Promise<Song> {
+    console.log('shiba', songDTO.artists);
     const song = new Song();
     song.title = songDTO.title;
-    // song.artists = songDTO.artists;
+    song.artists = songDTO.artists;
     song.duration = songDTO.duration;
     song.lyrics = songDTO.lyrics;
     song.releasedDate = songDTO.releasedDate;
