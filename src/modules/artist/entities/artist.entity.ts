@@ -1,7 +1,8 @@
 import { Song } from 'src/modules/songs/entities/song.entity';
 import { User } from 'src/modules/users/entities/user.entity';
-import { JoinColumn, ManyToMany, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, JoinColumn, ManyToMany, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 
+@Entity('artists')
 export class Artist {
   @PrimaryGeneratedColumn()
   id: number;

@@ -12,6 +12,7 @@ import { User } from './modules/users/entities/user.entity';
 import { Song } from './modules/songs/entities/song.entity';
 import { PlayList } from './modules/playlists/entities/playlist.entity';
 import { ArtistModule } from './modules/artist/artist.module';
+import { Artist } from './modules/artist/entities/artist.entity';
 
 @Module({
   imports: [
@@ -25,7 +26,7 @@ import { ArtistModule } from './modules/artist/artist.module';
       username: 'root',
       password: '',
       database: 'nestjs',
-      entities: [User, Song, PlayList],
+      entities: [User, Song, PlayList, Artist],
       synchronize: true,
     }),
     ArtistModule,
