@@ -19,8 +19,6 @@ export class Song {
   @Column('text')
   lyrics: string;
 
-  @Column('text')
-  huhu: string;
   /*
   I have refactored the artists column. I don't need to store it as an array of strings. 
   This time we need to add @ManyToMany relation
