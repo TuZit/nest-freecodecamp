@@ -25,4 +25,7 @@ export class User {
    */
   @OneToMany(() => PlayList, (playList) => playList.user)
   playLists: PlayList;
+
+  @Column()
+  phone: string;
 }

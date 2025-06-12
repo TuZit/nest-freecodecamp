@@ -1,35 +1,24 @@
 import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { dataSourceOptions } from 'db/data-source';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { LoggerMiddleware } from './common/middleware/logger.middleware';
-import { SongsModule } from './modules/songs/songs.module';
-import { SongsController } from './modules/songs/songs.controller';
 import { DevConfigServices } from './common/providers/DevConfigServices';
-import { PlaylistsModule } from './modules/playlists/playlists.module';
-import { UsersModule } from './modules/users/users.module';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './modules/users/entities/user.entity';
-import { Song } from './modules/songs/entities/song.entity';
-import { PlayList } from './modules/playlists/entities/playlist.entity';
 import { ArtistModule } from './modules/artist/artist.module';
-import { Artist } from './modules/artist/entities/artist.entity';
 import { AuthModule } from './modules/auth/auth.module';
+import { PlaylistsModule } from './modules/playlists/playlists.module';
+import { SongsController } from './modules/songs/songs.controller';
+import { SongsModule } from './modules/songs/songs.module';
+import { UsersModule } from './modules/users/users.module';
 
 @Module({
   imports: [
     SongsModule,
     PlaylistsModule,
     UsersModule,
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: 'localhost',
-      port: 3306,
-      username: 'root',
-      password: '',
-      database: 'nestjs',
-      entities: [User, Song, PlayList, Artist],
-      synchronize: true,
-    }),
+    // TypeOrmModule.forRoot({ ...dataSourceOptions, entities: [User, Song, PlayList, Artist] }),
+    TypeOrmModule.forRoot(dataSourceOptions),
     ArtistModule,
     AuthModule,
   ],
