@@ -11,6 +11,7 @@ import { PlaylistsModule } from './modules/playlists/playlists.module';
 import { SongsController } from './modules/songs/songs.controller';
 import { SongsModule } from './modules/songs/songs.module';
 import { UsersModule } from './modules/users/users.module';
+import { EventModule } from './modules/event/event.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { UsersModule } from './modules/users/users.module';
     TypeOrmModule.forRoot(dataSourceOptions),
     ArtistModule,
     AuthModule,
+    EventModule,
   ],
   controllers: [AppController],
   providers: [
